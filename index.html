@@ -24,6 +24,9 @@
           <img src="images/light.png" alt="Omastro Marketing" />
           <h1>Omastro Marketing</h1>
         </div>
+        <button class="mobile-menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
         <div class="navbar-menu">
           <ul class="navbar-menu-list">
             <li class="navbar-menu-item active" data-index="0">Home</li>
@@ -34,6 +37,7 @@
             <div class="active-indicator"></div>
           </ul>
         </div>
+        <div class="mobile-menu-overlay"></div>
         <div class="navbar-buttons">
           <button class="navbar-button-item signup">Sign Up</button>
           <button class="navbar-button-item login">Login</button>
@@ -280,6 +284,35 @@
       document.addEventListener("DOMContentLoaded", function () {
         const menuItems = document.querySelectorAll(".navbar-menu-item");
         const indicator = document.querySelector(".active-indicator");
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+        const mobileMenu = document.querySelector(".navbar-menu");
+        const mobileMenuOverlay = document.querySelector(
+          ".mobile-menu-overlay"
+        );
+        let isMenuOpen = false;
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+          isMenuOpen = !isMenuOpen;
+          mobileMenu.classList.toggle("active");
+          mobileMenuOverlay.classList.toggle("active");
+          mobileMenuToggle.innerHTML = isMenuOpen
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+          document.body.style.overflow = isMenuOpen ? "hidden" : "";
+        }
+
+        mobileMenuToggle.addEventListener("click", toggleMobileMenu);
+        mobileMenuOverlay.addEventListener("click", toggleMobileMenu);
+
+        // Close mobile menu when clicking menu items
+        menuItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            if (isMenuOpen) {
+              toggleMobileMenu();
+            }
+          });
+        });
 
         // Set initial position with animation
         const setIndicatorPosition = (item, animate = true) => {
@@ -328,13 +361,22 @@
         });
 
         // Handle window resize
+        let resizeTimer;
         window.addEventListener("resize", () => {
-          const currentActive = document.querySelector(
-            ".navbar-menu-item.active"
-          );
-          if (currentActive) {
-            setIndicatorPosition(currentActive, false);
-          }
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            const currentActive = document.querySelector(
+              ".navbar-menu-item.active"
+            );
+            if (currentActive) {
+              setIndicatorPosition(currentActive, false);
+            }
+
+            // Close mobile menu on resize
+            if (isMenuOpen && window.innerWidth > 768) {
+              toggleMobileMenu();
+            }
+          }, 100);
         });
       });
     </script>

@@ -827,3 +827,269 @@ body {
     gap: 12px;
   }
 }
+
+/* Mobile Menu Styles */
+.mobile-menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .navbar-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 400px;
+    height: 100vh;
+    background: white;
+    padding: 80px 40px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    display: block;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-menu.active {
+    right: 0;
+  }
+
+  .navbar-menu-list {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .navbar-menu-item {
+    font-size: 1.2rem;
+    padding: 12px 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .active-indicator {
+    display: none;
+  }
+
+  .navbar-menu-item.active {
+    background: linear-gradient(
+      135deg,
+      var(--primary-blue),
+      var(--primary-green)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 99;
+  }
+
+  .mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Improved Mobile Layouts */
+  .hero-section {
+    padding: 40px 0;
+  }
+
+  .hero-container {
+    gap: 40px;
+  }
+
+  .hero-content {
+    order: 2;
+  }
+
+  .hero-image {
+    order: 1;
+    margin: -20px -5% 0;
+    width: 110%;
+  }
+
+  .hero-badge {
+    margin: 0 auto 20px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-stats {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .hero-stat {
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .product-section {
+    padding: 60px 0;
+  }
+
+  .product-grid {
+    gap: 24px;
+  }
+
+  .product-card {
+    padding: 24px;
+  }
+
+  .about-section {
+    padding: 60px 0;
+  }
+
+  .about-container {
+    gap: 40px;
+  }
+
+  .about-image {
+    margin: 0 -5%;
+    width: 110%;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+  }
+
+  .footer {
+    padding: 60px 0 30px;
+  }
+
+  .footer-top {
+    gap: 40px;
+  }
+
+  .footer-links {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 12px 16px;
+    margin: 8px auto;
+  }
+
+  .navbar-buttons {
+    gap: 8px;
+  }
+
+  .navbar-button-item {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-description {
+    font-size: 1rem;
+  }
+
+  .product-card {
+    padding: 20px;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    text-align: center;
+  }
+
+  .footer-legal {
+    justify-content: center;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-container,
+  .about-container {
+    gap: 40px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+/* Animation Optimizations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  .navbar-button-item:hover,
+  .hero-button:hover,
+  .product-card:hover,
+  .social-link:hover {
+    transform: none;
+  }
+
+  .product-card {
+    transform: none !important;
+  }
+
+  .footer-links a:hover {
+    transform: none;
+  }
+}
