@@ -61,19 +61,12 @@
             >
               Projects
             </li>
-            <li
-              class="navbar-menu-item"
-              data-index="4"
-              onclick="document.querySelector('.contact-section').scrollIntoView({behavior: 'smooth'})"
-            >
-              Contact
-            </li>
             <div class="active-indicator"></div>
           </ul>
         </div>
         <div class="mobile-menu-overlay"></div>
         <div class="navbar-buttons">
-          <button class="navbar-button-item signup">Get Started</button>
+          <a href="/login" class="navbar-button-item signup">Get Started</a>
         </div>
       </nav>
     </div>
@@ -102,20 +95,6 @@
             >
               Contact Us <i class="fas fa-envelope"></i>
             </button>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-number">10+</div>
-              <div class="hero-stat-label">Markets</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-number">95%</div>
-              <div class="hero-stat-label">Success Rate</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-number">100+</div>
-              <div class="hero-stat-label">Projects</div>
-            </div>
           </div>
         </div>
         <div class="hero-globe-container">
@@ -239,90 +218,6 @@
       </div>
     </section>
 
-    <section class="contact-section">
-      <div class="section-container">
-        <div class="section-header">
-          <h2 class="section-title">Let's Grow Together</h2>
-          <p class="section-description">
-            Have a question? Ready to scale? We'd love to hear from you!
-          </p>
-        </div>
-        <div class="contact-grid">
-          <div class="contact-form">
-            <form id="contactForm" onsubmit="handleSubmit(event)">
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                  minlength="2"
-                />
-                <div class="error-message" id="nameError"></div>
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email Address"
-                  required
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                />
-                <div class="error-message" id="emailError"></div>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  placeholder="Company Name (Optional)"
-                />
-              </div>
-              <div class="form-group">
-                <textarea
-                  id="message"
-                  name="message"
-                  placeholder="Your Message"
-                  required
-                  minlength="10"
-                ></textarea>
-                <div class="error-message" id="messageError"></div>
-              </div>
-              <button type="submit" class="contact-submit" id="submitButton">
-                Get in Touch
-              </button>
-              <div class="form-status" id="formStatus"></div>
-            </form>
-          </div>
-          <div class="contact-info">
-            <div class="info-item">
-              <i class="fas fa-envelope"></i>
-              <p>contact@growthlaps.com</p>
-            </div>
-            <div class="info-item">
-              <i class="fas fa-phone"></i>
-              <p>+65 XXXX XXXX</p>
-            </div>
-            <div class="info-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>GrowthLaps HQ, Singapore</p>
-            </div>
-            <div class="social-links">
-              <a href="#" class="social-link"
-                ><i class="fab fa-linkedin"></i
-              ></a>
-              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="social-link"
-                ><i class="fab fa-instagram"></i
-              ></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-top">
@@ -335,36 +230,13 @@
               Empowering businesses to scale profitably across Asia through
               innovative strategies and solutions.
             </p>
-            <div class="footer-social">
-              <a href="#" class="social-link" aria-label="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="#" class="social-link" aria-label="Twitter">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-link" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-              </a>
-            </div>
           </div>
           <div class="footer-contact">
             <h4>Contact Us</h4>
             <div class="footer-info">
               <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <div>
-                  <p>GrowthLaps HQ</p>
-                  <p>71 Robinson Road, #14-01</p>
-                  <p>Singapore 068895</p>
-                </div>
-              </div>
-              <div class="info-item">
                 <i class="fas fa-envelope"></i>
-                <p>contact@growthlaps.com</p>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-phone"></i>
-                <p>+65 XXXX XXXX</p>
+                <p id="info-item-text">contact@growthlaps.com</p>
               </div>
             </div>
           </div>
@@ -392,8 +264,8 @@
             © 2024 Growthlaps. All rights reserved.
           </div>
           <div class="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <a href="/privacypolicy">Privacy Policy</a>
+            <a href="/tos">Terms of Service</a>
           </div>
         </div>
       </div>
