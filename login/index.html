@@ -21,12 +21,10 @@
   <body>
     <div class="navbar-container">
       <nav class="navbar">
-        <div class="navbar-logo">
-          <a href="/">
-            <img src="../images/light.png" alt="Growthlaps" />
-            <h1>Growthlaps</h1>
-          </a>
-        </div>
+        <a href="/" class="navbar-logo">
+          <img src="../images/light.png" alt="Growthlaps" />
+          <h1>Growthlaps</h1>
+        </a>
       </nav>
     </div>
 
@@ -34,29 +32,29 @@
       <div class="login-container">
         <div class="login-box">
           <div class="login-header">
-            <h2>Welcome Back</h2>
+            <h2><i class="fas fa-user-circle"></i> Welcome Back</h2>
             <p>Enter your credentials to access your account</p>
           </div>
 
           <form class="login-form">
             <div class="form-group">
-              <label for="email">Email Address</label>
+              <label for="email"
+                ><i class="fas fa-envelope"></i> Email Address</label
+              >
               <input
                 type="email"
                 id="email"
-                name="email"
                 placeholder="Enter your email"
                 required
               />
             </div>
 
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="password"><i class="fas fa-lock"></i> Password</label>
               <div class="password-input">
                 <input
                   type="password"
                   id="password"
-                  name="password"
                   placeholder="Enter your password"
                   required
                 />
@@ -68,35 +66,63 @@
 
             <div class="form-options">
               <label class="remember-me">
-                <input type="checkbox" name="remember" />
+                <input type="checkbox" />
+                <i class="far fa-check-square"></i>
                 <span>Remember me</span>
               </label>
-              <a href="#" class="forgot-password">Forgot password?</a>
+              <a href="#" class="forgot-password">
+                <i class="fas fa-key"></i> Forgot password?
+              </a>
             </div>
 
-            <button type="submit" class="login-button">Sign In</button>
+            <button type="submit" class="login-button">
+              <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
           </form>
 
           <div class="login-divider">
-            <span>or continue with</span>
+            <span>Or continue with</span>
           </div>
 
           <div class="social-login">
             <button class="social-button google">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                alt="Google"
-              />
-              Google
+              <i class="fab fa-google"></i>
+              <span>Google</span>
             </button>
             <button class="social-button linkedin">
               <i class="fab fa-linkedin-in"></i>
-              LinkedIn
+              <span>LinkedIn</span>
             </button>
           </div>
 
           <div class="login-footer">
-            <p>Don't have an account? <a href="#">Sign up</a></p>
+            <p>
+              Don't have an account?
+              <a href="#"><i class="fas fa-user-plus"></i> Sign up</a>
+            </p>
+          </div>
+        </div>
+        <div class="login-features">
+          <div class="feature-item">
+            <i class="fas fa-shield-alt"></i>
+            <div class="feature-text">
+              <h4>Secure Login</h4>
+              <p>Advanced encryption for your data</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-headset"></i>
+            <div class="feature-text">
+              <h4>24/7 Support</h4>
+              <p>Always here to help you</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-cloud"></i>
+            <div class="feature-text">
+              <h4>Cloud Backup</h4>
+              <p>Your data is always safe</p>
+            </div>
           </div>
         </div>
       </div>
@@ -106,11 +132,14 @@
       <div class="footer-container">
         <div class="footer-bottom">
           <div class="footer-copyright">
-            © 2024 Growthlaps. All rights reserved.
+            <i class="far fa-copyright"></i> 2024 Growthlaps. All rights
+            reserved.
           </div>
           <div class="footer-legal">
-            <a href="/privacypolicy">Privacy Policy</a>
-            <a href="/tos">Terms of Service</a>
+            <a href="/privacypolicy"
+              ><i class="fas fa-shield-alt"></i> Privacy Policy</a
+            >
+            <a href="/tos"><i class="fas fa-gavel"></i> Terms of Service</a>
           </div>
         </div>
       </div>
@@ -118,22 +147,18 @@
 
     <script>
       // Password visibility toggle
-      document
-        .querySelector(".password-toggle")
-        .addEventListener("click", function () {
-          const passwordInput = document.querySelector("#password");
-          const icon = this.querySelector("i");
+      const passwordInput = document.getElementById("password");
+      const toggleButton = document.querySelector(".password-toggle");
 
-          if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-          } else {
-            passwordInput.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-          }
-        });
+      toggleButton.addEventListener("click", () => {
+        const type =
+          passwordInput.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordInput.setAttribute("type", type);
+        toggleButton.querySelector("i").classList.toggle("fa-eye");
+        toggleButton.querySelector("i").classList.toggle("fa-eye-slash");
+      });
     </script>
   </body>
 </html>

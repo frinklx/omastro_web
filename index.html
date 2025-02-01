@@ -284,12 +284,58 @@
         let isMenuOpen = false;
         let lastScrollTop = 0;
 
-        // Handle scroll
+        // Update active menu item and indicator
+        function updateActiveItem(index) {
+          menuItems.forEach((item) => item.classList.remove("active"));
+          const activeItem = menuItems[index];
+          activeItem.classList.add("active");
+
+          // Get the exact dimensions and position for smooth animation
+          const itemRect = activeItem.getBoundingClientRect();
+          const menuRect = document
+            .querySelector(".navbar-menu")
+            .getBoundingClientRect();
+
+          // Update indicator position and width
+          indicator.style.width = `${itemRect.width}px`;
+          indicator.style.left = `${activeItem.offsetLeft}px`;
+
+          // Force a reflow to ensure smooth animation
+          indicator.offsetHeight;
+        }
+
+        // Set initial position of active indicator
+        function setInitialIndicator() {
+          const activeItem = document.querySelector(".navbar-menu-item.active");
+          if (activeItem) {
+            // Initially set without transition for immediate positioning
+            indicator.style.transition = "none";
+            updateActiveItem([...menuItems].indexOf(activeItem));
+
+            // Force a reflow before re-enabling transitions
+            indicator.offsetHeight;
+            indicator.style.transition = "";
+          }
+        }
+
+        // Smooth scroll to section with improved offset calculation
+        function scrollToSection(section) {
+          const navbarHeight = navbar.offsetHeight;
+          const extraOffset = 20; // Additional offset for visual comfort
+          const sectionTop = section.offsetTop - navbarHeight - extraOffset;
+
+          window.scrollTo({
+            top: sectionTop,
+            behavior: "smooth",
+          });
+        }
+
+        // Handle scroll with improved section detection
         window.addEventListener("scroll", () => {
           const scrollTop =
             window.pageYOffset || document.documentElement.scrollTop;
 
-          // Add/remove scrolled class based on scroll position
+          // Add/remove scrolled class with a small threshold
           if (scrollTop > 10) {
             navbar.classList.add("scrolled");
           } else {
@@ -297,36 +343,51 @@
           }
 
           // Update active menu item based on scroll position
-          const sections = document.querySelectorAll("section");
-          let currentSection = "";
+          const sections = [
+            document.querySelector(".hero-section"),
+            document.querySelector(".services-section"),
+            document.querySelector(".scaling-section"),
+            document.querySelector(".projects-section"),
+          ];
 
-          sections.forEach((section) => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.clientHeight;
-            if (
-              scrollTop >= sectionTop &&
-              scrollTop < sectionTop + sectionHeight
-            ) {
-              currentSection = section.className.split(" ")[0];
+          let currentSectionIndex = sections.length;
+          const navbarHeight = navbar.offsetHeight;
+          const threshold = 100; // Adjust this value to change when sections become active
+
+          sections.forEach((section, index) => {
+            if (section) {
+              const sectionTop = section.offsetTop - navbarHeight - threshold;
+              const sectionBottom = sectionTop + section.offsetHeight;
+
+              // Check if we're in the section with some buffer for smoother transitions
+              if (scrollTop >= sectionTop && scrollTop < sectionBottom) {
+                currentSectionIndex = index;
+              }
             }
           });
 
-          // Update active menu item
-          if (currentSection) {
-            menuItems.forEach((item) => {
-              item.classList.remove("active");
-              if (
-                item.textContent
-                  .toLowerCase()
-                  .includes(currentSection.replace("-section", ""))
-              ) {
-                item.classList.add("active");
-                setIndicatorPosition(item);
-              }
-            });
+          if (currentSectionIndex < sections.length) {
+            updateActiveItem(currentSectionIndex);
           }
+        });
 
-          lastScrollTop = scrollTop;
+        // Handle menu item clicks
+        menuItems.forEach((item, index) => {
+          item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetId = item.getAttribute("onclick").match(/'([^']+)'/)[1];
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+              updateActiveItem(index);
+              scrollToSection(targetSection);
+
+              // Close mobile menu if open
+              if (isMenuOpen) {
+                toggleMobileMenu();
+              }
+            }
+          });
         });
 
         // Mobile menu toggle
@@ -334,88 +395,15 @@
           isMenuOpen = !isMenuOpen;
           mobileMenu.classList.toggle("active");
           mobileMenuOverlay.classList.toggle("active");
-          mobileMenuToggle.innerHTML = isMenuOpen
-            ? '<i class="fas fa-times"></i>'
-            : '<i class="fas fa-bars"></i>';
+          mobileMenuToggle.classList.toggle("active");
           document.body.style.overflow = isMenuOpen ? "hidden" : "";
         }
 
         mobileMenuToggle.addEventListener("click", toggleMobileMenu);
         mobileMenuOverlay.addEventListener("click", toggleMobileMenu);
 
-        // Close mobile menu when clicking menu items
-        menuItems.forEach((item) => {
-          item.addEventListener("click", () => {
-            if (isMenuOpen) {
-              toggleMobileMenu();
-            }
-          });
-        });
-
-        // Set initial position with animation
-        const setIndicatorPosition = (item, animate = true) => {
-          if (!animate) {
-            indicator.style.transition = "none";
-          }
-
-          indicator.style.width = `${item.offsetWidth}px`;
-          indicator.style.left = `${item.offsetLeft}px`;
-
-          if (!animate) {
-            // Force reflow
-            indicator.offsetHeight;
-            indicator.style.transition = "";
-          }
-        };
-
-        // Set initial position without animation
-        const activeItem = document.querySelector(".navbar-menu-item.active");
-        if (activeItem) {
-          setIndicatorPosition(activeItem, false);
-        }
-
-        menuItems.forEach((item) => {
-          item.addEventListener("click", function () {
-            // Remove active class from all items
-            menuItems.forEach((i) => i.classList.remove("active"));
-
-            // Add active class to clicked item
-            this.classList.add("active");
-
-            // Move indicator with animation
-            setIndicatorPosition(this);
-          });
-
-          // Add hover effect
-          item.addEventListener("mouseenter", function () {
-            if (!this.classList.contains("active")) {
-              this.style.transform = "translateY(-2px)";
-            }
-          });
-
-          item.addEventListener("mouseleave", function () {
-            this.style.transform = "translateY(0)";
-          });
-        });
-
         // Handle window resize
-        let resizeTimer;
-        window.addEventListener("resize", () => {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(() => {
-            const currentActive = document.querySelector(
-              ".navbar-menu-item.active"
-            );
-            if (currentActive) {
-              setIndicatorPosition(currentActive, false);
-            }
-
-            // Close mobile menu on resize
-            if (isMenuOpen && window.innerWidth > 768) {
-              toggleMobileMenu();
-            }
-          }, 100);
-        });
+        window.addEventListener("resize", setInitialIndicator);
 
         // Initialize globe
         function initGlobe() {
